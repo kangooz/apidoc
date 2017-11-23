@@ -1,0 +1,626 @@
+swagger: '2.0'
+schemes:
+  - http
+  - https
+host: api.you2you.fr
+basePath: /api
+info:
+  description: |
+    Nos équipes sont à votre disposition pour vous répondre en cas de problèmes, suggestions ou autre remarques. Contactez-nous via l'adresse email: dev[at]you2you.fr.
+
+    # Authorisation
+    Merci de suivre cette procédure pour vos emails afin qu'ils soient traités dans les meilleurs délais. [OBJET MAIL]: SUPPORT API - NOM SOCIETE Email du compte API Key Requête HTTP + contenu JSON.
+
+    # Récuparation des clefs d'API
+    Vos clefs d'API seront disponibles dès lors que vous possédez un compte You2You. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:
+    1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.
+
+    2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.
+
+    3. Naviguez sur votre dashboard jusqu'à la section API https://preprod-livraison.you2you.fr/settings."
+  version: '1.0'
+  title: API de Development You2You
+  x-logo:
+    url: 'https://apis.guru/openapi-template/logo.png'
+produces:
+  - application/json
+  - application/xml
+  - text/csv
+consumes:
+  - application/json
+  - application/xml
+paths:
+  /auth/test:
+    get:
+      tags:
+        - Authorisation
+      summary: Test des droits d'accès.
+      description: Envoi d'une requête afin de vérifier que les droits d'accès sont valides.
+      operationId: getUserByName
+      produces:
+        - application/json
+      parameters:
+        - in: body
+          name: body
+          description: La pair de clés à tester
+          required: true
+          schema:
+            $ref: '#/definitions/Authorisation'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/AuthorisationSuccess'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+          examples:
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  /api/deliveries:
+    post:
+      tags:
+        - Livraison
+      summary: Création d'une nouvelle livraison
+      description: |
+        Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un Youzer puisse la réserver et effectuer la livraison.
+      operationId: createDelivery
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: Les informations sur la livraison
+          schema:
+            $ref: '#/definitions/Delivery'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliveryCreationSuccess'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+          examples:
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  '/api/deliveries/{id}':
+    patch:
+      tags:
+        - Livraison
+      summary: Récupérer une livraison.
+      description: Récupère toutes les informations d''une livraison.
+      operationId: getDelivery
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID de la livraison
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliverySuccess'
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  '/api/deliveries/{id}/cancel':
+    patch:
+      tags:
+        - Livraison
+      summary: Annuler une livraison.
+      description: |
+        La possibilité d'annuler une livraison varie en fonction du status de la livraison. Voici les règles en vigueur:
+
+        * Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un Youzer.
+
+          Dans ce cas, status.value < 2.
+
+        * Une livraison réservée par un Youzer **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.
+
+          Dans ce cas, status.value == 2.
+
+        * Une livraison **ne peut pas être annulée** à partir du moment où un Youzer à récupéré le colis.
+
+          Dans ce cas, status.value > 2.
+
+        Pour toutes demandes ou incidents sur une livraison, nos équipes sont là pour vous aider et répondre à vos questions. Contactez nous [ICI](https://help.you2you.fr)
+      operationId: cancelDelivery
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID de la livraison
+          required: true
+          type: string
+      responses:
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+          examples:
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  /api/deliveries/eligibility:
+    post:
+      tags:
+        - Livraison
+      summary: Test d'éligibilité pour une nouvelle livraison.
+      description: |
+        Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et ladresse de livraison.
+      operationId: testDelivery
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: Les informations sur la livraison
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryTest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliveryTestSuccess'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+          examples:
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  /api/deliveries/pricing:
+    post:
+      tags:
+        - Livraison
+      summary: Calculer le prix d'une nouvelle livraison
+      description: |
+        Calcul le prix d''une livraison en fonction des informations du colis et du parcours à effectuer pour livrer le colis.
+      operationId: computeDeliveryPrice
+      produces:
+        - application/json
+      parameters:
+        - name: body
+          in: body
+          description: Les informations sur la livraison
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryTest'
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliveryPriceSuccess'
+        '401':
+          description: Unauthorized
+          schema:
+            type: string
+          examples:
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+definitions:
+  InternalServerError:
+    type: object
+    properties:
+      error:
+        description: Le type d'erreur
+        type: string
+        example: Internal server error
+      errors:
+        description: La description de l'erreur
+        type: object
+  Authorisation:
+    type: object
+    properties:
+      apiKey:
+        description: La clé API publique
+        type: string
+        minLength: 1
+        example: Wz6H5h0yD4POmoNY
+      apiSecret:
+        description: La clé API secrete
+        type: string
+        minLength: 1
+        example: Wz6H5h0yD4POmoNY
+  AuthorisationSuccess:
+    type: object
+    properties:
+      message:
+        description: Le message de succès
+        type: string
+        example: Success. You credentials are valid.
+  Delivery:
+    type: object
+    required:
+      - description
+      - shipStart
+      - shipEnd
+      - dimension
+      - weight
+      - Contact
+      - Customer
+    properties:
+      description:
+        description: Les informations additionnelles sur la livraison
+        type: string
+        example: Bouquet de fleurs à livrer à un de mes clients VIP
+      shipStart:
+        description: |
+          Une date et heure qui corresponds au début du créneau de livraison souhaité.
+
+          Formatage attendu: yyyy/mm/dd hh:mm[:ss]
+
+          yyyy = l'année,
+          mm = le mois,
+          dd = le jour du mois,
+          hh = l'heure,
+          mm = la minute,
+          ss = la seconde
+        type: string
+        example: Bouquet de fleurs à livrer à un de mes clients VIP
+      shipEnd:
+        description: |
+          Une date et heure qui corresponds à la fin du créneau de livraison souhaité. Généralement 2 heures après le début du créneau de livraison.
+
+          Formatage attendu: yyyy/mm/dd hh:mm[:ss]
+
+          yyyy = l'année,
+          mm = le mois,
+          dd = le jour du mois,
+          hh = l'heure,
+          mm = la minute,
+          ss = la seconde
+        type: string
+        example: Bouquet de fleurs à livrer à un de mes clients VIP
+      dimension:
+        description: Les dimensions du colis à livrer
+        allOf:
+          - $ref: '#/definitions/Dimension'
+      weight:
+        description: Le poids du colis à livrer en kilos
+        type: number
+        example: 0.42
+      Contact:
+        description: Les informations du contact pour le retrait du colis
+        allOf:
+          - $ref: '#/definitions/Contact'
+      Customer:
+        description: Les informations du contact pour le dépôt du colis
+        allOf:
+          - $ref: '#/definitions/Customer'
+  DeliveryCreationSuccess:
+    type: object
+    properties:
+      message:
+        description: Le message de succès
+        type: string
+        example: Delivery created.
+      DeliveryId:
+        description: L'ID de la livraison créée
+        type: integer
+        example: 42
+  DeliverySuccess:
+    type: object
+    properties:
+      Pickup:
+        description: L'adresse de retrait du colis
+        allOf:
+          - $ref: '#/definitions/Pickup'
+      Destination:
+        description: L'adresse de dépôt du colis
+        allOf:
+          - $ref: '#/definitions/Destination'
+      dimension:
+        description: Les dimensions du colis à livrer
+        allOf:
+          - $ref: '#/definitions/Dimension'
+      weight:
+        description: Le poids du colis à livrer en kilos
+        type: number
+        example: 0.42
+  DeliveryTest:
+    type: object
+    required:
+      - Pickup
+      - Destination
+      - dimension
+      - weight
+    properties:
+      Pickup:
+        description: L'adresse de retrait du colis
+        allOf:
+          - $ref: '#/definitions/Pickup'
+      Destination:
+        description: L'adresse de dépôt du colis
+        allOf:
+          - $ref: '#/definitions/Destination'
+      dimension:
+        description: Les dimensions du colis à livrer
+        allOf:
+          - $ref: '#/definitions/Dimension'
+      weight:
+        description: Le poids du colis à livrer en kilos
+        type: number
+        example: 0.42
+  DeliveryTestSuccess:
+    type: object
+    properties:
+      valid:
+        description: Indique si la livraison est éligible ou non
+        type: boolean
+        example: true
+      postalCodePickup:
+        description: Indique si l'adresse de retrait du colis et dans un périmètre valide ou non
+        type: boolean
+        example: true
+      postalCodeDeposit:
+        description: Indique si l'adresse de dépôt du colis et dans un périmètre valide ou non
+        type: boolean
+        example: true
+      size:
+        description: Indique si les dimensions du colis sont acceptables ou non
+        type: boolean
+        example: true
+      weight:
+        description: Indique si le poids du colis est acceptable ou non
+        type: boolean
+        example: true
+      distance:
+        description: Indique si la distance de parcours est acceptable ou non
+        type: boolean
+        example: true
+  DeliveryPriceSuccess:
+    type: object
+    properties:
+      price:
+        description: Le prix de la livraison
+        type: number
+        example: 40.2
+      devise:
+        description: La devise utilisé pour le prix
+        type: string
+        example: Euros
+  Pickup:
+    type: object
+    required:
+      - postalcode
+      - lat
+      - long
+    properties:
+      postalcode:
+        description: Le code postal
+        type: string
+        example: 75002
+      lat:
+        description: La coordonnée de latitude
+        type: number
+        example: 48.868331
+      long:
+        description: La coordonnée de longitude
+        type: number
+        example: 2.334712
+  Destination:
+    type: object
+    required:
+      - postalcode
+      - lat
+      - long
+    properties:
+      postalcode:
+        description: Le code postal
+        type: string
+        example: 75009
+      lat:
+        description: La coordonnée de latitude
+        type: number
+        example: 48.8748577
+      long:
+        description: La coordonnée de longitude
+        type: number
+        example: 2.3408563
+  Dimension:
+    type: object
+    required:
+      - length
+      - width
+      - height
+    properties:
+      length:
+        description: La longueur en centimètre
+        type: number
+        example: 10
+      width:
+        description: La largeur en centimètre
+        type: number
+        example: 10
+      height:
+        description: La hauteur en centimètre
+        type: number
+        example: 20
+  Contact:
+    type: object
+    required:
+      - firstname
+      - lastname
+      - email
+      - mobile
+      - Address
+    properties:
+      firstname:
+        description: Le prénom
+        type: string
+        example: Foo
+      lastname:
+        description: Le nom
+        type: string
+        example: Bar
+      email:
+        description: Le email
+        type: string
+        example: foo.bar@company.com
+      mobile:
+        description: Le numéro de téléphone
+        type: string
+        example: 33642642112
+      title:
+        description: |
+          Le titre de la personne. Ex: Mr, Mme, etc.
+        type: string
+        example: Mr
+      birthday:
+        description: Le jour d'anniversaire
+        type: number
+        example: 4
+      birthmonth:
+        description: Le mois d'anniversaire
+        type: number
+        example: 2
+      birthyear:
+        description: L'année d'anniversaire
+        type: number
+        example: 1988
+      Address:
+        description: L'adresse du contact
+        allOf:
+          - $ref: '#/definitions/Address'
+  Customer:
+    type: object
+    required:
+      - firstname
+      - lastname
+      - email
+      - mobile
+      - Address
+    properties:
+      firstname:
+        description: Le prénom
+        type: string
+        example: Foo
+      lastname:
+        description: Le nom
+        type: string
+        example: Bar
+      email:
+        description: Le email
+        type: string
+        example: foo.bar@company.com
+      mobile:
+        description: Le numéro de téléphone
+        type: string
+        example: 33642642112
+      title:
+        description: |
+          Le titre de la personne. Ex: Mr, Mme, etc.
+        type: string
+        example: Mr
+      birthday:
+        description: Le jour d'anniversaire
+        type: number
+        example: 4
+      birthmonth:
+        description: Le mois d'anniversaire
+        type: number
+        example: 2
+      birthyear:
+        description: L'année d'anniversaire
+        type: number
+        example: 1988
+      Address:
+        description: L'adresse du contact
+        allOf:
+          - $ref: '#/definitions/Address'
+  Address:
+    type: object
+    required:
+      - city
+      - country
+      - postalcode
+      - street
+      - streetnumber
+    properties:
+      name:
+        description: Intitulé de l'adresse
+        type: string
+        example: ''
+      city:
+        description: La ville
+        type: string
+        example: Paris
+      country:
+        description: Le pays
+        type: string
+        example: France
+      postalcode:
+        description: Le code postal
+        type: string
+        example: 94270
+      street:
+        description: Le nom de rue
+        type: string
+        example: Rue pasteur
+      streetnumber:
+        description: le numéro de rue
+        type: number
+        example: 24
+      information:
+        description: Le complément d'adresse
+        type: string
+        example: ''
