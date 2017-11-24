@@ -78,7 +78,7 @@
           "Livraison"
         ],
         "summary": "Récupérer une livraison.",
-        "description": "Récupère toutes les informations d''une livraison.",
+        "description": "Récupère toutes les informations d'une livraison.",
         "operationId": "getDelivery",
         "produces": [
           "application/json"
@@ -301,7 +301,7 @@
         "tags": [
           "Livraison"
         ],
-        "summary": "Tester l'éligibilité pour une nouvelle livraison.",
+        "summary": "Tester l'éligibilité d'une nouvelle livraison",
         "description": "Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et ladresse de livraison.\n",
         "operationId": "testDelivery",
         "produces": [
@@ -430,17 +430,19 @@
     },
     "Authorisation": {
       "type": "object",
+      "required": [
+        "apiKey",
+        "apiSecret"
+      ],
       "properties": {
         "apiKey": {
           "description": "La clé API publique",
           "type": "string",
-          "minLength": 1,
           "example": "Wz6H5h0yD4POmoNY"
         },
         "apiSecret": {
           "description": "La clé API secrete",
           "type": "string",
-          "minLength": 1,
           "example": "Wz6H5h0yD4POmoNY"
         }
       }
@@ -532,7 +534,7 @@
       "type": "object",
       "properties": {
         "Pickup": {
-          "description": "L'adresse de retrait du colis",
+          "description": "Informations sur la livraison",
           "allOf": [
             {
               "$ref": "#/definitions/Pickup"
@@ -758,7 +760,7 @@
           "example": 33642642112
         },
         "title": {
-          "description": "Le titre de la personne. Ex: Mr, Mme, etc.\n",
+          "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
           "type": "string",
           "example": "Mr"
         },
@@ -818,7 +820,7 @@
           "example": 33642642112
         },
         "title": {
-          "description": "Le titre de la personne. Ex: Mr, Mme, etc.\n",
+          "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
           "type": "string",
           "example": "Mr"
         },

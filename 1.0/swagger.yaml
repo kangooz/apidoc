@@ -34,7 +34,7 @@ paths:
     get:
       tags:
         - Authorisation
-      summary: Test des droits d'accès.
+      summary: Tester les droits d'accès.
       description: Envoi d'une requête afin de vérifier que les droits d'accès sont valides.
       operationId: getUserByName
       produces:
@@ -62,7 +62,62 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/InternalServerError'
-  /api/deliveries:
+  '/deliveries/{id}':
+    get:
+      tags:
+        - Livraison
+      summary: Récupérer une livraison.
+      description: Récupère toutes les informations d'une livraison.
+      operationId: getDelivery
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID de la livraison
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliverySuccess'
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
+  /deliveries:
+    get:
+      tags:
+        - Livraison
+      summary: Récupérer toutes les livraisons.
+      description: Récupère toutes les livraisons créées par votre profil.
+      operationId: getAllDelivery
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Success
+          schema:
+            $ref: '#/definitions/DeliverySuccess'
+        '422':
+          description: Validation Error
+          schema:
+            type: string
+          examples:
+            application/json: Some fields are not valid
+            text/plain: Some fields are not valid
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/InternalServerError'
     post:
       tags:
         - Livraison
@@ -101,13 +156,14 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/InternalServerError'
-  '/api/deliveries/{id}':
-    patch:
+  '/deliveries/{id}/status':
+    get:
       tags:
         - Livraison
-      summary: Récupérer une livraison.
-      description: Récupère toutes les informations d''une livraison.
-      operationId: getDelivery
+      summary: Récupérer le statut d'une livraison.
+      description: |
+        Récupère le statut actuel d'une livraison.
+      operationId: getDeliveryStatus
       produces:
         - application/json
       parameters:
@@ -117,22 +173,20 @@ paths:
           required: true
           type: string
       responses:
-        '200':
-          description: Success
-          schema:
-            $ref: '#/definitions/DeliverySuccess'
-        '422':
-          description: Validation Error
+        '204':
+          description: No Content
+        '401':
+          description: Unauthorized
           schema:
             type: string
           examples:
-            application/json: Some fields are not valid
-            text/plain: Some fields are not valid
+            application/json: Invalid credentials.
+            text/plain: Invalid credentials.
         '500':
           description: Internal Server Error
           schema:
             $ref: '#/definitions/InternalServerError'
-  '/api/deliveries/{id}/cancel':
+  '/deliveries/{id}/cancel':
     patch:
       tags:
         - Livraison
@@ -176,11 +230,11 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/InternalServerError'
-  /api/deliveries/eligibility:
+  /deliveries/eligibility:
     post:
       tags:
         - Livraison
-      summary: Test d'éligibilité pour une nouvelle livraison.
+      summary: Tester l'éligibilité d'une nouvelle livraison
       description: |
         Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et ladresse de livraison.
       operationId: testDelivery
@@ -216,7 +270,7 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/InternalServerError'
-  /api/deliveries/pricing:
+  /deliveries/pricing:
     post:
       tags:
         - Livraison
@@ -269,16 +323,17 @@ definitions:
         type: object
   Authorisation:
     type: object
+    required:
+      - apiKey
+      - apiSecret
     properties:
       apiKey:
         description: La clé API publique
         type: string
-        minLength: 1
         example: Wz6H5h0yD4POmoNY
       apiSecret:
         description: La clé API secrete
         type: string
-        minLength: 1
         example: Wz6H5h0yD4POmoNY
   AuthorisationSuccess:
     type: object
@@ -361,7 +416,7 @@ definitions:
     type: object
     properties:
       Pickup:
-        description: L'adresse de retrait du colis
+        description: Informations sur la livraison
         allOf:
           - $ref: '#/definitions/Pickup'
       Destination:
@@ -521,8 +576,7 @@ definitions:
         type: string
         example: 33642642112
       title:
-        description: |
-          Le titre de la personne. Ex: Mr, Mme, etc.
+        description: 'Le titre de la personne. Ex: Mr, Mme, etc.'
         type: string
         example: Mr
       birthday:
@@ -567,8 +621,7 @@ definitions:
         type: string
         example: 33642642112
       title:
-        description: |
-          Le titre de la personne. Ex: Mr, Mme, etc.
+        description: 'Le titre de la personne. Ex: Mr, Mme, etc.'
         type: string
         example: Mr
       birthday:
