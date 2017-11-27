@@ -14,6 +14,16 @@
       "url": "https://apis.guru/openapi-template/logo.png"
     }
   },
+  "x-servers": [
+    {
+      "url": "//api.you2you.fr",
+      "description": "Serveur de production"
+    },
+    {
+      "url": "//sandbox-api.you2you.fr",
+      "description": "Serveur de test"
+    }
+  ],
   "produces": [
     "application/json",
     "application/xml",
@@ -60,7 +70,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "500": {
@@ -96,18 +106,21 @@
           "200": {
             "description": "Success",
             "schema": {
-              "$ref": "#/definitions/DeliverySuccess"
+              "$ref": "#/definitions/DeliveryDetails"
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "401": {
+            "description": "Unauthorized",
             "schema": {
               "type": "string"
             },
             "examples": {
-              "application/json": "Some fields are not valid",
-              "text/plain": "Some fields are not valid"
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
             }
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error",
@@ -136,14 +149,14 @@
               "$ref": "#/definitions/DeliverySuccess"
             }
           },
-          "422": {
-            "description": "Validation Error",
+          "401": {
+            "description": "Unauthorized",
             "schema": {
               "type": "string"
             },
             "examples": {
-              "application/json": "Some fields are not valid",
-              "text/plain": "Some fields are not valid"
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "500": {
@@ -188,7 +201,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "422": {
@@ -241,7 +254,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "500": {
@@ -284,7 +297,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "500": {
@@ -302,7 +315,7 @@
           "Livraison"
         ],
         "summary": "Tester l'éligibilité d'une nouvelle livraison",
-        "description": "Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et ladresse de livraison.\n",
+        "description": "Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et l'adresse de livraison.\n",
         "operationId": "testDelivery",
         "produces": [
           "application/json"
@@ -332,7 +345,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "422": {
@@ -390,7 +403,7 @@
             },
             "examples": {
               "application/json": "Invalid credentials.",
-              "text/plain": "Invalid credentials."
+              "text/plain": "\"Invalid credentials.\""
             }
           },
           "422": {
@@ -477,12 +490,12 @@
         "shipStart": {
           "description": "Une date et heure qui corresponds au début du créneau de livraison souhaité.\n\nFormatage attendu: yyyy/mm/dd hh:mm[:ss]\n\nyyyy = l'année,\nmm = le mois,\ndd = le jour du mois,\nhh = l'heure,\nmm = la minute,\nss = la seconde\n",
           "type": "string",
-          "example": "Bouquet de fleurs à livrer à un de mes clients VIP"
+          "example": "2016-05-30 18:28:00"
         },
         "shipEnd": {
           "description": "Une date et heure qui corresponds à la fin du créneau de livraison souhaité. Généralement 2 heures après le début du créneau de livraison.\n\nFormatage attendu: yyyy/mm/dd hh:mm[:ss]\n\nyyyy = l'année,\nmm = le mois,\ndd = le jour du mois,\nhh = l'heure,\nmm = la minute,\nss = la seconde\n",
           "type": "string",
-          "example": "Bouquet de fleurs à livrer à un de mes clients VIP"
+          "example": "2016-05-30 20:28:00"
         },
         "dimension": {
           "description": "Les dimensions du colis à livrer",
@@ -512,6 +525,494 @@
               "$ref": "#/definitions/Customer"
             }
           ]
+        }
+      }
+    },
+    "DeliveryDetails": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "L'ID de la livraison",
+          "type": "integer",
+          "example": 3327
+        },
+        "hash": {
+          "description": "le hash de la livraison",
+          "type": "string",
+          "example": "DDQ3DCdP"
+        },
+        "parcelnumber": {
+          "description": "L'ID du colis",
+          "type": "integer",
+          "example": 5678
+        },
+        "status": {
+          "description": "Le statut de la livraison",
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "La valeur textuelle",
+              "example": "Prête"
+            },
+            "value": {
+              "type": "integer",
+              "description": "La valeur numérique",
+              "example": 1
+            }
+          }
+        },
+        "origin": {
+          "description": "L'origine de la demande de livraison",
+          "type": "integer",
+          "example": 3
+        },
+        "description": {
+          "description": "La description de la livraison",
+          "type": "string",
+          "example": "Un bouquet de fleurs pour une client VIP"
+        },
+        "shipstart": {
+          "description": "La date et l'heure de début du créneau de livraison souhaité",
+          "type": "string",
+          "example": "2016-07-29T18:51:20.000Z"
+        },
+        "shipend": {
+          "description": "La date et l'heure de fin du créneau de livraison souhaité",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timeclosedeposit": {
+          "description": "La date et l'heure d'approche du livreur vers le point de livraison",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timedeposit": {
+          "description": "La date et l'heure de dépôt de la livraison",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timeclosepickup": {
+          "description": "La date et l'heure d'approche du livreur vers le point de retrait",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timepickup": {
+          "description": "La date et l'heure de retrait du colis",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timeready": {
+          "description": "La date et l'heure de la disponibilité de la livraison par le service You2you",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "timeattach": {
+          "description": "La date et l'heure de la réservation de la livraison par un livreur",
+          "type": "string",
+          "example": "2016-07-29T20:00:00.000Z"
+        },
+        "pickupcode": {
+          "description": "Le code nécessaire pour la récupération du colis",
+          "type": "string",
+          "example": "7232B"
+        },
+        "deliverycode": {
+          "description": "Le code nécessaire pour la livraison du colis",
+          "type": "string",
+          "example": "5632A"
+        },
+        "distance": {
+          "description": "La distance calculée à parcourir pour effectuer la livraison",
+          "type": "number",
+          "example": 5.6
+        },
+        "price": {
+          "description": "Le prix de la livraison",
+          "type": "number",
+          "example": 11.2
+        },
+        "priceYouzee": {
+          "description": "La part du livré dans le prix",
+          "type": "number",
+          "example": 0
+        },
+        "pricePartner": {
+          "description": "La part de l'enseigne dans la prix",
+          "type": "number",
+          "example": 11.2
+        },
+        "vehicules": {
+          "description": "Le(s) moyen(s) de transport nécessaire pour effectuer la livraison",
+          "type": "string",
+          "example": "bike,moto,car,van"
+        },
+        "weight": {
+          "description": "Le poids du colis",
+          "type": "number",
+          "example": 2.4
+        },
+        "driver": {
+          "description": "Les informations sur le livreur",
+          "type": "object",
+          "properties": {
+            "default_source": {
+              "type": "string",
+              "description": "L'identifiant du moyen de paiement",
+              "example": "card_DDQ3DCdP"
+            },
+            "livemode": {
+              "type": "integer",
+              "description": "Le livemode",
+              "example": 0
+            },
+            "ongoing": {
+              "type": "integer",
+              "description": "La méthode de versement",
+              "example": 0
+            },
+            "email": {
+              "type": "string",
+              "description": "L'email",
+              "example": "foo.bar@compagny.fr"
+            },
+            "mobile": {
+              "type": "string",
+              "description": "Le numéro de portable",
+              "example": 33642642112
+            },
+            "Person": {
+              "description": "Les informations complémentaires",
+              "type": "object",
+              "properties": {
+                "title": {
+                  "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
+                  "type": "string",
+                  "example": "Mr"
+                },
+                "lastname": {
+                  "description": "Le nom",
+                  "type": "string",
+                  "example": "Bar"
+                },
+                "firstname": {
+                  "description": "Le prénom",
+                  "type": "string",
+                  "example": "Foo"
+                },
+                "birthday": {
+                  "description": "Le jour de naissance",
+                  "type": "number",
+                  "example": 4
+                },
+                "birthmonth": {
+                  "description": "Le mois de naissance",
+                  "type": "number",
+                  "example": 2
+                },
+                "birthyear": {
+                  "description": "L'année de naissance",
+                  "type": "number",
+                  "example": 1988
+                },
+                "vehicules": {
+                  "description": "Le(s) moyen(s) de transport disponible",
+                  "type": "string",
+                  "example": "walk,bike,moto,car"
+                },
+                "mobile": {
+                  "description": "Le numéro de téléphone",
+                  "type": "string",
+                  "example": "+33642642112"
+                },
+                "email": {
+                  "description": "L'email",
+                  "type": "string",
+                  "example": "foo.bar@company.com"
+                }
+              }
+            }
+          }
+        },
+        "personAddress": {
+          "description": "Les informations sur l'adresse de livraison",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "L'adresse complète",
+              "type": "string",
+              "example": "123 Boulevard Haussmann"
+            },
+            "type": {
+              "description": "Le type d'adresse",
+              "type": "string",
+              "example": "person"
+            },
+            "streetnumber": {
+              "description": "Le numéro de rue",
+              "type": "string",
+              "example": "123"
+            },
+            "street": {
+              "description": "Le nom de rue",
+              "type": "string",
+              "example": "Boulevard Haussmann"
+            },
+            "postalcode": {
+              "description": "Le code postal",
+              "type": "string",
+              "example": "75008"
+            },
+            "city": {
+              "description": "La ville",
+              "type": "string",
+              "example": "Paris"
+            },
+            "country": {
+              "description": "Le pays",
+              "type": "string",
+              "example": "France"
+            },
+            "information": {
+              "description": "Le complément d'adresse",
+              "type": "string",
+              "example": ""
+            },
+            "infoSecret": {
+              "description": "Les informations confidentielles nécessaire pour effectuer une livraison",
+              "type": "string",
+              "example": "code de portail: 5675A"
+            },
+            "latitude": {
+              "description": "La coordonnée de latitude",
+              "type": "number",
+              "example": 48.875088
+            },
+            "longitude": {
+              "description": "La coordonnée de longitude",
+              "type": "number",
+              "example": 2.318032
+            }
+          }
+        },
+        "storeAddress": {
+          "description": "Les informations sur l'adresse de retrait",
+          "type": "object",
+          "properties": {
+            "name": {
+              "description": "L'adresse complète",
+              "type": "string",
+              "example": "32 Rue de Dunkerque"
+            },
+            "type": {
+              "description": "Le type d'adresse",
+              "type": "string",
+              "example": "person"
+            },
+            "streetnumber": {
+              "description": "Le numéro de rue",
+              "type": "string",
+              "example": "32"
+            },
+            "street": {
+              "description": "Le nom de rue",
+              "type": "string",
+              "example": "Rue de Dunkerque"
+            },
+            "postalcode": {
+              "description": "Le code postal",
+              "type": "string",
+              "example": "75010"
+            },
+            "city": {
+              "description": "La ville",
+              "type": "string",
+              "example": "Paris"
+            },
+            "country": {
+              "description": "Le pays",
+              "type": "string",
+              "example": "France"
+            },
+            "information": {
+              "description": "Le complément d'adresse",
+              "type": "string",
+              "example": ""
+            },
+            "infoSecret": {
+              "description": "Les informations confidentielles nécessaire pour effectuer le retrait",
+              "type": "string",
+              "example": "code d'entrée: 1206"
+            },
+            "latitude": {
+              "description": "La coordonnée de latitude",
+              "type": "number",
+              "example": 48.880917
+            },
+            "longitude": {
+              "description": "La coordonnée de longitude",
+              "type": "number",
+              "example": 2.350971
+            }
+          }
+        },
+        "owner": {
+          "description": "Les informations sur le livreur",
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
+              "type": "string",
+              "example": "Mr"
+            },
+            "lastname": {
+              "description": "Le nom",
+              "type": "string",
+              "example": "Bar"
+            },
+            "firstname": {
+              "description": "Le prénom",
+              "type": "string",
+              "example": "Foo"
+            },
+            "birthday": {
+              "description": "Le jour de naissance",
+              "type": "number",
+              "example": 4
+            },
+            "birthmonth": {
+              "description": "Le mois de naissance",
+              "type": "number",
+              "example": 2
+            },
+            "birthyear": {
+              "description": "L'année de naissance",
+              "type": "number",
+              "example": 1988
+            },
+            "vehicules": {
+              "description": "Le(s) moyen(s) de transport disponible",
+              "type": "string",
+              "example": "walk,bike,moto,car"
+            },
+            "mobile": {
+              "description": "Le numéro de téléphone",
+              "type": "string",
+              "example": "+33642642112"
+            },
+            "email": {
+              "description": "L'email",
+              "type": "string",
+              "example": "foo.bar@company.com"
+            }
+          }
+        },
+        "receiver": {
+          "description": "Les informations du contact sur le lieu de réception",
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
+              "type": "string",
+              "example": "Mr"
+            },
+            "lastname": {
+              "description": "Le nom",
+              "type": "string",
+              "example": "Bar"
+            },
+            "firstname": {
+              "description": "Le prénom",
+              "type": "string",
+              "example": "Foo"
+            },
+            "birthday": {
+              "description": "Le jour de naissance",
+              "type": "number",
+              "example": 4
+            },
+            "birthmonth": {
+              "description": "Le mois de naissance",
+              "type": "number",
+              "example": 2
+            },
+            "birthyear": {
+              "description": "L'année de naissance",
+              "type": "number",
+              "example": 1988
+            },
+            "vehicules": {
+              "description": "Le(s) moyen(s) de transport disponible",
+              "type": "string",
+              "example": ""
+            },
+            "mobile": {
+              "description": "Le numéro de téléphone",
+              "type": "string",
+              "example": "+33642642112"
+            },
+            "email": {
+              "description": "L'email",
+              "type": "string",
+              "example": "foo.bar@company.com"
+            }
+          }
+        },
+        "contact": {
+          "description": "Les informations du contact sur le lieu de retrait",
+          "type": "object",
+          "properties": {
+            "title": {
+              "description": "Le titre de la personne. Ex: Mr, Mme, etc.",
+              "type": "string",
+              "example": "Mr"
+            },
+            "lastname": {
+              "description": "Le nom",
+              "type": "string",
+              "example": "Bar"
+            },
+            "firstname": {
+              "description": "Le prénom",
+              "type": "string",
+              "example": "Foo"
+            },
+            "birthday": {
+              "description": "Le jour de naissance",
+              "type": "number",
+              "example": 4
+            },
+            "birthmonth": {
+              "description": "Le mois de naissance",
+              "type": "number",
+              "example": 2
+            },
+            "birthyear": {
+              "description": "L'année de naissance",
+              "type": "number",
+              "example": 1988
+            },
+            "vehicules": {
+              "description": "Le(s) moyen(s) de transport disponible",
+              "type": "string",
+              "example": ""
+            },
+            "mobile": {
+              "description": "Le numéro de téléphone",
+              "type": "string",
+              "example": "+33642642112"
+            },
+            "email": {
+              "description": "L'email",
+              "type": "string",
+              "example": "foo.bar@company.com"
+            }
+          }
+        },
+        "email": {
+          "description": "Les dimensions du colis",
+          "type": "string",
+          "example": "L30 x l15 x H10 cm"
         }
       }
     },
@@ -765,17 +1266,17 @@
           "example": "Mr"
         },
         "birthday": {
-          "description": "Le jour d'anniversaire",
+          "description": "Le jour de naissance",
           "type": "number",
           "example": 4
         },
         "birthmonth": {
-          "description": "Le mois d'anniversaire",
+          "description": "Le mois de naissance",
           "type": "number",
           "example": 2
         },
         "birthyear": {
-          "description": "L'année d'anniversaire",
+          "description": "L'année de naissance",
           "type": "number",
           "example": 1988
         },
@@ -825,17 +1326,17 @@
           "example": "Mr"
         },
         "birthday": {
-          "description": "Le jour d'anniversaire",
+          "description": "Le jour de naissance",
           "type": "number",
           "example": 4
         },
         "birthmonth": {
-          "description": "Le mois d'anniversaire",
+          "description": "Le mois de naissance",
           "type": "number",
           "example": 2
         },
         "birthyear": {
-          "description": "L'année d'anniversaire",
+          "description": "L'année de naissance",
           "type": "number",
           "example": 1988
         },
@@ -877,7 +1378,7 @@
         "postalcode": {
           "description": "Le code postal",
           "type": "string",
-          "example": 94270
+          "example": "94270"
         },
         "street": {
           "description": "Le nom de rue",
