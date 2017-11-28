@@ -16,12 +16,12 @@
   },
   "x-servers": [
     {
-      "url": "//api.you2you.fr",
-      "description": "Serveur de production"
+      "url": "//api.sandbox.you2you.fr/api",
+      "description": "Serveur de test"
     },
     {
-      "url": "//api.sandbox.you2you.fr",
-      "description": "Serveur de test"
+      "url": "//api.you2you.fr/api",
+      "description": "Serveur de production"
     }
   ],
   "produces": [
@@ -210,11 +210,7 @@
           "422": {
             "description": "Validation Error",
             "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Some fields are not valid",
-              "text/plain": "Some fields are not valid"
+              "$ref": "#/definitions/DeliveryCreationValidation"
             }
           },
           "500": {
@@ -263,6 +259,9 @@
               "text/plain": "\"Invalid credentials.\""
             }
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error",
             "schema": {
@@ -305,6 +304,15 @@
               "application/json": "Invalid credentials.",
               "text/plain": "\"Invalid credentials.\""
             }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/DeliveryShipped"
+            }
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error",
@@ -357,11 +365,7 @@
           "422": {
             "description": "Validation Error",
             "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Some fields are not valid",
-              "text/plain": "Some fields are not valid"
+              "$ref": "#/definitions/DeliveryPriceValidation"
             }
           },
           "500": {
@@ -415,11 +419,7 @@
           "422": {
             "description": "Validation Error",
             "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Some fields are not valid",
-              "text/plain": "Some fields are not valid"
+              "$ref": "#/definitions/DeliveryPriceValidation"
             }
           },
           "500": {
@@ -657,6 +657,16 @@
           "description": "Le poids du colis",
           "type": "number",
           "example": 2.4
+        },
+        "haveBeenShift": {
+          "description": "Indique si la livraison a été décalée",
+          "type": "boolean",
+          "example": true
+        },
+        "paymentMode": {
+          "description": "Le mode de paiement",
+          "type": "integer",
+          "example": 0
         },
         "driver": {
           "description": "Les informations sur le livreur",
@@ -1447,6 +1457,11 @@
           "type": "boolean",
           "example": true
         },
+        "distance": {
+          "description": "Champs vide",
+          "type": "string",
+          "example": ""
+        },
         "size": {
           "description": "Indique si les dimensions du colis sont acceptables ou non",
           "type": "boolean",
@@ -1457,7 +1472,7 @@
           "type": "boolean",
           "example": true
         },
-        "distance": {
+        "valiDdistance": {
           "description": "Indique si la distance de parcours est acceptable ou non",
           "type": "boolean",
           "example": true
@@ -1467,36 +1482,144 @@
     "DeliveryPriceSuccess": {
       "type": "object",
       "properties": {
-        "price": {
-          "description": "Le prix de la livraison",
+        "distance": {
+          "description": "La distance du parcours pour effectuer la livraison",
           "type": "number",
-          "example": 40.2
+          "example": 1.2
         },
-        "devise": {
-          "description": "La devise utilisé pour le prix",
+        "price": {
+          "description": "Le prix en euros",
           "type": "string",
-          "example": "Euros"
+          "example": "4.5"
+        },
+        "coef": {
+          "description": "Les coefficients de repartition en %",
+          "type": "object",
+          "properties": {
+            "y2y": {
+              "description": "La part dédiée à You2You",
+              "type": "number",
+              "example": 11
+            },
+            "distance": {
+              "description": "La part dédiée au livreur",
+              "type": "number",
+              "example": 89
+            }
+          }
+        }
+      }
+    },
+    "DeliveryPriceValidation": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Le type d'erreur",
+          "type": "string",
+          "example": "Invalid parameters"
+        },
+        "message": {
+          "description": "La description de l'erreur",
+          "type": "string",
+          "example": "Some fields are invalid."
+        },
+        "errorDetails": {
+          "description": "La liste des erreurs",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "description": "Le champs lié à cette erreur",
+                "type": "string",
+                "example": "Destination"
+              },
+              "message": {
+                "description": "Le message d'erreur",
+                "type": "string",
+                "example": "'Destination' is required"
+              },
+              "type": {
+                "description": "Le type d'erreur",
+                "type": "string",
+                "example": "any.required"
+              }
+            }
+          }
+        }
+      }
+    },
+    "DeliveryCreationValidation": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Le type d'erreur",
+          "type": "string",
+          "example": "Invalid parameters"
+        },
+        "message": {
+          "description": "La description de l'erreur",
+          "type": "string",
+          "example": "Some fields are invalid."
+        },
+        "errorDetails": {
+          "description": "La liste des erreurs",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "field": {
+                "description": "Le champs lié à cette erreur",
+                "type": "string",
+                "example": "shipStart"
+              },
+              "message": {
+                "description": "Le message d'erreur",
+                "type": "string",
+                "example": "'shipStart' is required"
+              },
+              "type": {
+                "description": "Le type d'erreur",
+                "type": "string",
+                "example": "any.required"
+              }
+            }
+          }
         }
       }
     },
     "StatusSuccess": {
       "type": "object",
       "properties": {
-        "status": {
+        "value": {
           "description": "Le statut de la livraison",
           "type": "object",
           "properties": {
-            "value": {
+            "status": {
               "description": "La valeur numérique",
               "type": "integer",
               "example": 7
-            },
-            "text": {
-              "description": "La valeur textuelle",
-              "type": "string",
-              "example": "Annulée"
             }
           }
+        },
+        "text": {
+          "description": "La valeur textuelle",
+          "type": "string",
+          "example": "Annulée"
+        },
+        "status": {
+          "description": "Champs objet vide",
+          "type": "object"
+        }
+      }
+    },
+    "DeliveryShipped": {
+      "type": "object",
+      "properties": {
+        "error": {
+          "description": "Le message d'erreur",
+          "type": "string",
+          "example": "Ce colis est deja en cours de livraison par un livreur You2You."
         }
       }
     },
@@ -1511,7 +1634,7 @@
         "postalcode": {
           "description": "Le code postal",
           "type": "string",
-          "example": 75002
+          "example": "75002"
         },
         "lat": {
           "description": "La coordonnée de latitude",
@@ -1536,7 +1659,7 @@
         "postalcode": {
           "description": "Le code postal",
           "type": "string",
-          "example": 75009
+          "example": "75009"
         },
         "lat": {
           "description": "La coordonnée de latitude",
