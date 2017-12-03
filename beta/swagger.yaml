@@ -9,8 +9,8 @@ info:
     Bienvenue sur la documentation de l'API publique You2You. Nous sommes une plateforme de livraison dédiée aux startups et commerçants. Livrez vos clients moins cher et plus vite grâce à notre communauté collaborative.
 
     # Fonctionnement
-    Notre API est organisées suivant le style REST et utilise des verbes et des codes de retour standards du protocole HTTP. Elle renvoie exclusivement des réponses au format JSON ou texte.
-    À ce jour, il n’existe pas de bibliothèque officielle. Cette documentation est la pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents.
+    Notre API est organisée suivant le style REST et utilise des verbes et des codes de retour standards du protocole HTTP. Elle renvoie exclusivement des réponses au format JSON ou texte.
+    À ce jour, il n’existe pas de bibliothèque officielle. Cette documentation est là pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents.
 
     # Accès à l’API
     L’API est disponible sur deux environnements:
@@ -20,7 +20,7 @@ info:
     https://api.sandbox.you2you.fr, l’environnement dédié aux tests.
 
     # Comment tester des requêtes vers l'API?
-    Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer  le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
+    Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
 
     # Versionning
     L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.
@@ -152,7 +152,7 @@ paths:
         - Livraison
       summary: Création d'une nouvelle livraison
       description: |
-        Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un Youzer puisse la réserver et effectuer la livraison.
+        Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un livreur You2You puisse la réserver et effectuer la livraison.
       operationId: createDelivery
       produces:
         - application/json
@@ -224,15 +224,15 @@ paths:
       description: |
         La possibilité d'annuler une livraison varie en fonction du status de la livraison. Voici les règles en vigueur:
 
-        * Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un Youzer.
+        * Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un livreur.
 
           Dans ce cas, status.value < 2.
 
-        * Une livraison réservée par un Youzer **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.
+        * Une livraison réservée par un livreur **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.
 
           Dans ce cas, status.value == 2.
 
-        * Une livraison **ne peut pas être annulée** à partir du moment où un Youzer à récupéré le colis.
+        * Une livraison **ne peut pas être annulée** à partir du moment où un livreur à récupéré le colis.
 
           Dans ce cas, status.value > 2.
 
@@ -503,7 +503,7 @@ definitions:
         type: string
         example: 7232B
       deliverycode:
-        description: Le code nécessaire pour la livraison du colis
+        description: Le code nécessaire pour le dépôt du colis
         type: string
         example: 5632A
       distance:
@@ -519,11 +519,11 @@ definitions:
         type: number
         example: 0
       pricePartner:
-        description: La part de l'enseigne dans la prix
+        description: La part de l'enseigne dans le prix
         type: number
         example: 11.2
       vehicules:
-        description: Le(s) moyen(s) de transport nécessaire pour effectuer la livraison
+        description: Le(s) moyen(s) de transport requis pour effectuer la livraison
         type: string
         example: 'bike,moto,car,van'
       weight:
@@ -552,7 +552,7 @@ definitions:
             example: 0
           ongoing:
             type: integer
-            description: La méthode de versement
+            description: Indique si le livreur est en route
             example: 0
           email:
             type: string
@@ -591,7 +591,7 @@ definitions:
                 type: number
                 example: 1988
               vehicules:
-                description: Le(s) moyen(s) de transport disponible
+                description: Le(s) moyen(s) de transport disponible(s)
                 type: string
                 example: 'walk,bike,moto,car'
               mobile:
@@ -639,7 +639,7 @@ definitions:
             type: string
             example: ''
           infoSecret:
-            description: Les informations confidentielles nécessaire pour effectuer une livraison
+            description: Les informations confidentielles nécessaires pour effectuer une livraison
             type: string
             example: 'code de portail: 5675A'
           latitude:
@@ -687,7 +687,7 @@ definitions:
             type: string
             example: ''
           infoSecret:
-            description: Les informations confidentielles nécessaire pour effectuer le retrait
+            description: Les informations confidentielles nécessaires pour effectuer le retrait
             type: string
             example: 'code d''entrée: 1206'
           latitude:
@@ -727,7 +727,7 @@ definitions:
             type: number
             example: 1988
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: 'walk,bike,moto,car'
           mobile:
@@ -767,7 +767,7 @@ definitions:
             type: number
             example: 1988
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: ''
           mobile:
@@ -807,7 +807,7 @@ definitions:
             type: number
             example: 1988
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: ''
           mobile:
@@ -870,7 +870,7 @@ definitions:
         type: number
         example: 11.2
       vehicules:
-        description: Le(s) moyen(s) de transport nécessaire pour effectuer la livraison
+        description: Le(s) moyen(s) de transport nécessaire(s) pour effectuer la livraison
         type: string
         example: 'bike,moto,car,van'
       hash:
@@ -1002,7 +1002,7 @@ definitions:
             type: string
             example: ''
           infoSecret:
-            description: Les informations confidentielles nécessaire pour effectuer le retrait
+            description: Les informations confidentielles nécessaires pour effectuer le retrait
             type: string
             example: 'code d''entrée: 1206'
           latitude:
@@ -1030,7 +1030,7 @@ definitions:
             type: string
             example: Foo
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: 'walk,bike,moto,car'
           mobile:
@@ -1058,7 +1058,7 @@ definitions:
             type: string
             example: Foo
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: ''
           mobile:
@@ -1086,7 +1086,7 @@ definitions:
             type: string
             example: Foo
           vehicules:
-            description: Le(s) moyen(s) de transport disponible
+            description: Le(s) moyen(s) de transport disponible(s)
             type: string
             example: ''
           mobile:
@@ -1140,11 +1140,11 @@ definitions:
         type: boolean
         example: true
       postalCodePickup:
-        description: Indique si l'adresse de retrait du colis et dans un périmètre valide ou non
+        description: Indique si l'adresse de retrait du colis est dans un périmètre valide ou non
         type: boolean
         example: true
       postalCodeDeposit:
-        description: Indique si l'adresse de dépôt du colis et dans un périmètre valide ou non
+        description: Indique si l'adresse de dépôt du colis est dans un périmètre valide ou non
         type: boolean
         example: true
       distance:

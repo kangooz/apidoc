@@ -7,7 +7,7 @@
   "host": "api.you2you.fr",
   "basePath": "/api",
   "info": {
-    "description": "Bienvenue sur la documentation de l'API publique You2You. Nous sommes une plateforme de livraison dédiée aux startups et commerçants. Livrez vos clients moins cher et plus vite grâce à notre communauté collaborative.\n\n# Fonctionnement\nNotre API est organisées suivant le style REST et utilise des verbes et des codes de retour standards du protocole HTTP. Elle renvoie exclusivement des réponses au format JSON ou texte.\nÀ ce jour, il n’existe pas de bibliothèque officielle. Cette documentation est la pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents.\n\n# Accès à l’API\nL’API est disponible sur deux environnements:\n\nhttps://api.you2you.fr, l’environnement de production.\n\nhttps://api.sandbox.you2you.fr, l’environnement dédié aux tests.\n\n# Comment tester des requêtes vers l'API?\nNous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer  le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).\n\n# Versionning\nL'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.\n\nVersions disponibles:\n- [1.0](https://kangooz.github.io/apidoc)\n\n# Récuparation des clefs d'API\nVos clefs d'API seront disponibles dès lors que vous possédez un compte You2You. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:\n1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.\n\n2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.\n\n3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/settings.\"\n\n# Aide\nNos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.\n",
+    "description": "Bienvenue sur la documentation de l'API publique You2You. Nous sommes une plateforme de livraison dédiée aux startups et commerçants. Livrez vos clients moins cher et plus vite grâce à notre communauté collaborative.\n\n# Fonctionnement\nNotre API est organisée suivant le style REST et utilise des verbes et des codes de retour standards du protocole HTTP. Elle renvoie exclusivement des réponses au format JSON ou texte.\nÀ ce jour, il n’existe pas de bibliothèque officielle. Cette documentation est là pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents.\n\n# Accès à l’API\nL’API est disponible sur deux environnements:\n\nhttps://api.you2you.fr, l’environnement de production.\n\nhttps://api.sandbox.you2you.fr, l’environnement dédié aux tests.\n\n# Comment tester des requêtes vers l'API?\nNous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).\n\n# Versionning\nL'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.\n\nVersions disponibles:\n- [1.0](https://kangooz.github.io/apidoc)\n\n# Récuparation des clefs d'API\nVos clefs d'API seront disponibles dès lors que vous possédez un compte You2You. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:\n1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.\n\n2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.\n\n3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/settings.\"\n\n# Aide\nNos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.\n",
     "version": "1.0",
     "title": "API de Development You2You",
     "x-logo": {
@@ -175,7 +175,7 @@
           "Livraison"
         ],
         "summary": "Création d'une nouvelle livraison",
-        "description": "Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un Youzer puisse la réserver et effectuer la livraison.\n",
+        "description": "Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un livreur You2You puisse la réserver et effectuer la livraison.\n",
         "operationId": "createDelivery",
         "produces": [
           "application/json"
@@ -277,7 +277,7 @@
           "Livraison"
         ],
         "summary": "Annuler une livraison.",
-        "description": "La possibilité d'annuler une livraison varie en fonction du status de la livraison. Voici les règles en vigueur:\n\n* Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un Youzer.\n\n  Dans ce cas, status.value < 2.\n\n* Une livraison réservée par un Youzer **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.\n\n  Dans ce cas, status.value == 2.\n\n* Une livraison **ne peut pas être annulée** à partir du moment où un Youzer à récupéré le colis.\n\n  Dans ce cas, status.value > 2.\n\nPour toutes demandes ou incidents sur une livraison, nos équipes sont là pour vous aider et répondre à vos questions. Contactez nous [ICI](https://help.you2you.fr)\n",
+        "description": "La possibilité d'annuler une livraison varie en fonction du status de la livraison. Voici les règles en vigueur:\n\n* Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un livreur.\n\n  Dans ce cas, status.value < 2.\n\n* Une livraison réservée par un livreur **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.\n\n  Dans ce cas, status.value == 2.\n\n* Une livraison **ne peut pas être annulée** à partir du moment où un livreur à récupéré le colis.\n\n  Dans ce cas, status.value > 2.\n\nPour toutes demandes ou incidents sur une livraison, nos équipes sont là pour vous aider et répondre à vos questions. Contactez nous [ICI](https://help.you2you.fr)\n",
         "operationId": "cancelDelivery",
         "produces": [
           "application/json"
@@ -624,7 +624,7 @@
           "example": "7232B"
         },
         "deliverycode": {
-          "description": "Le code nécessaire pour la livraison du colis",
+          "description": "Le code nécessaire pour le dépôt du colis",
           "type": "string",
           "example": "5632A"
         },
@@ -644,12 +644,12 @@
           "example": 0
         },
         "pricePartner": {
-          "description": "La part de l'enseigne dans la prix",
+          "description": "La part de l'enseigne dans le prix",
           "type": "number",
           "example": 11.2
         },
         "vehicules": {
-          "description": "Le(s) moyen(s) de transport nécessaire pour effectuer la livraison",
+          "description": "Le(s) moyen(s) de transport requis pour effectuer la livraison",
           "type": "string",
           "example": "bike,moto,car,van"
         },
@@ -684,7 +684,7 @@
             },
             "ongoing": {
               "type": "integer",
-              "description": "La méthode de versement",
+              "description": "Indique si le livreur est en route",
               "example": 0
             },
             "email": {
@@ -732,7 +732,7 @@
                   "example": 1988
                 },
                 "vehicules": {
-                  "description": "Le(s) moyen(s) de transport disponible",
+                  "description": "Le(s) moyen(s) de transport disponible(s)",
                   "type": "string",
                   "example": "walk,bike,moto,car"
                 },
@@ -795,7 +795,7 @@
               "example": ""
             },
             "infoSecret": {
-              "description": "Les informations confidentielles nécessaire pour effectuer une livraison",
+              "description": "Les informations confidentielles nécessaires pour effectuer une livraison",
               "type": "string",
               "example": "code de portail: 5675A"
             },
@@ -856,7 +856,7 @@
               "example": ""
             },
             "infoSecret": {
-              "description": "Les informations confidentielles nécessaire pour effectuer le retrait",
+              "description": "Les informations confidentielles nécessaires pour effectuer le retrait",
               "type": "string",
               "example": "code d'entrée: 1206"
             },
@@ -907,7 +907,7 @@
               "example": 1988
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": "walk,bike,moto,car"
             },
@@ -958,7 +958,7 @@
               "example": 1988
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": ""
             },
@@ -1009,7 +1009,7 @@
               "example": 1988
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": ""
             },
@@ -1091,7 +1091,7 @@
           "example": 11.2
         },
         "vehicules": {
-          "description": "Le(s) moyen(s) de transport nécessaire pour effectuer la livraison",
+          "description": "Le(s) moyen(s) de transport nécessaire(s) pour effectuer la livraison",
           "type": "string",
           "example": "bike,moto,car,van"
         },
@@ -1258,7 +1258,7 @@
               "example": ""
             },
             "infoSecret": {
-              "description": "Les informations confidentielles nécessaire pour effectuer le retrait",
+              "description": "Les informations confidentielles nécessaires pour effectuer le retrait",
               "type": "string",
               "example": "code d'entrée: 1206"
             },
@@ -1294,7 +1294,7 @@
               "example": "Foo"
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": "walk,bike,moto,car"
             },
@@ -1330,7 +1330,7 @@
               "example": "Foo"
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": ""
             },
@@ -1366,7 +1366,7 @@
               "example": "Foo"
             },
             "vehicules": {
-              "description": "Le(s) moyen(s) de transport disponible",
+              "description": "Le(s) moyen(s) de transport disponible(s)",
               "type": "string",
               "example": ""
             },
@@ -1448,12 +1448,12 @@
           "example": true
         },
         "postalCodePickup": {
-          "description": "Indique si l'adresse de retrait du colis et dans un périmètre valide ou non",
+          "description": "Indique si l'adresse de retrait du colis est dans un périmètre valide ou non",
           "type": "boolean",
           "example": true
         },
         "postalCodeDeposit": {
-          "description": "Indique si l'adresse de dépôt du colis et dans un périmètre valide ou non",
+          "description": "Indique si l'adresse de dépôt du colis est dans un périmètre valide ou non",
           "type": "boolean",
           "example": true
         },
