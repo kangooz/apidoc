@@ -24,7 +24,7 @@ info:
     L’API est disponible sur deux environnements:
 
     - L'environnement de PRODUCTION : https://api.you2you.fr
-    - L'environnement dédié aux tests : https://api.sandbox.you2you.fr
+    - L'environnement dédié aux tests : https://api-sandbox.you2you.fr
 
     # Comment tester des requêtes vers l'API?
     Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
@@ -249,8 +249,8 @@ paths:
         | Retrait effectué  | 4  |
         | Proche lieu de livraison  | 5  |
         | Livrée  | 6  |
-        | Annulé 0%  | 7  |
-        | Annulé 50%  | 10  |
+        | Annulée 0%  | 7  |
+        | Annulée 50%  | 10  |
         | Retour 200%  | 12  |
         | Livrée 200%  | 13  |
       operationId: getDelivery
@@ -299,8 +299,8 @@ paths:
         | Retrait effectué  | 4  |
         | Proche lieu de livraison  | 5  |
         | Livrée  | 6  |
-        | Annulé 0%  | 7  |
-        | Annulé 50%  | 10  |
+        | Annulée 0%  | 7  |
+        | Annulée 50%  | 10  |
         | Retour 200%  | 12  |
         | Livrée 200%  | 13  |
       operationId: getDeliveryStatus
