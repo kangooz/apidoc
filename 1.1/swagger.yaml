@@ -260,8 +260,8 @@ paths:
         | Retrait effectué  | 4  |
         | Proche lieu de livraison  | 5  |
         | Livrée  | 6  |
-        | Annulé 0%  | 7  |
-        | Annulé 50%  | 10  |
+        | Annulée 0%  | 7  |
+        | Annulée 50%  | 10  |
         | Retour 200%  | 12  |
         | Livrée 200%  | 13  |
       operationId: getDelivery
@@ -310,8 +310,8 @@ paths:
         | Retrait effectué  | 4  |
         | Proche lieu de livraison  | 5  |
         | Livrée  | 6  |
-        | Annulé 0%  | 7  |
-        | Annulé 50%  | 10  |
+        | Annulée 0%  | 7  |
+        | Annulée 50%  | 10  |
         | Retour 200%  | 12  |
         | Livrée 200%  | 13  |
       operationId: getDeliveryStatus

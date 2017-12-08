@@ -287,7 +287,7 @@
           "Livraison"
         ],
         "summary": "Récupérer une livraison.",
-        "description": "Récupère toutes les informations d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulé 0%  | 7  |\n| Annulé 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
+        "description": "Récupère toutes les informations d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulée 0%  | 7  |\n| Annulée 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
         "operationId": "getDelivery",
         "produces": [
           "application/json"
@@ -336,7 +336,7 @@
           "Livraison"
         ],
         "summary": "Récupérer le statut d'une livraison.",
-        "description": "Récupère le statut actuel d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulé 0%  | 7  |\n| Annulé 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
+        "description": "Récupère le statut actuel d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulée 0%  | 7  |\n| Annulée 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
         "operationId": "getDeliveryStatus",
         "produces": [
           "application/json"
