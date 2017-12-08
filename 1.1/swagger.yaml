@@ -1166,6 +1166,14 @@ definitions:
         description: L'ID de la livraison créée
         type: integer
         example: 42
+      ref:
+        description: La référence du colis
+        type: string
+        example: '2017120831'
+      followUrl:
+        description: Lien de suivi
+        type: string
+        example: 'https://livraison.you2you.fr/f/22071/GRAtMwEV'
   DeliveryTest:
     type: object
     required:
