@@ -24,13 +24,13 @@ info:
     L’API est disponible sur deux environnements:
 
     - L'environnement de PRODUCTION : https://api.you2you.fr
-    - L'environnement dédiée aux tests : https://api-sandbox.you2you.fr
+    - L'environnement dédié aux tests : https://api-sandbox.you2you.fr
 
     # Comment tester des requêtes vers l'API?
     Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
 
-    # Versionnage
-    L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.
+    # Versionning
+    L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieures.
 
     Versions disponibles:
     - [1.1](https://kangooz.github.io/apidoc/1.1)
@@ -66,7 +66,7 @@ paths:
   /auth/test:
     get:
       tags:
-        - Authorisation
+        - Autorisation
       summary: Tester les droits d'accès.
       description: Envoi d'une requête afin de vérifier que les droits d'accès sont valides.
       operationId: getUserByName
@@ -101,7 +101,7 @@ paths:
         - Livraison
       summary: Tester l'éligibilité d'une nouvelle livraison
       description: |
-        Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de retrait et l'adresse de livraison.
+        Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. Le résultat est basé sur les informations du colis, l'adresse de retrait et l'adresse de livraison.
       operationId: testDelivery
       produces:
         - application/json
