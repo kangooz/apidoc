@@ -177,6 +177,8 @@ paths:
       description: |
         Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible sur notre application mobile "You2You" afin qu'un membre de la communauté Youzer-livreur You2You puisse la réserver et effectuer la livraison.
 
+        Le client final reçevra automatiquement un SMS de suivi lorsqu'un Youzer se sera attribué la livraison.
+
         Les champs "dimension" et "weight" sont optionnels si le champs "vehicules" est renseigné. Et inversement, le champs "vehicules" est optionnel si les champs "dimension" et "weight" sont renseignés.
 
         Règle de correspondance poids et dimension en fonction des moyens de transport.
