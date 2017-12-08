@@ -7,17 +7,17 @@ basePath: /api
 info:
   description: |
     Bienvenue sur la documentation de l'API publique You2You.
-    
+
     You2You est le leader de la livraison collaborative en France.
     - Nous livrons toutes vos commandes express en 1h30 ou sur RDV dans des créneaux d’une heure.
     - Un particulier se trouvant à proximité profite de votre demande de livraison pour rentabiliser son trajet en échange d’une compensation financière.
     - Une livraison économique, pratique, sociale et écologique.
-    
+
     # Fonctionnement
     Notre API est organisée suivant le style REST et elle :
     - utilise des verbes et des codes de retour standards du protocole HTTP.
     - renvoie exclusivement des réponses au format JSON ou texte.
-    
+
     Cette documentation est là pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents. À ce jour, il n’existe pas de bibliothèque officielle.
 
     # Accès à l’API
@@ -25,7 +25,7 @@ info:
 
     - L'environnement de PRODUCTION : https://api.you2you.fr
     - L'environnement dédiée aux tests : https://api.sandbox.you2you.fr
-    
+
     # Comment tester des requêtes vers l'API?
     Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
 
@@ -33,6 +33,7 @@ info:
     L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.
 
     Versions disponibles:
+    - [1.1](https://kangooz.github.io/apidoc/1.1)
     - [1.0](https://kangooz.github.io/apidoc/1.0)
 
     # Récupération des clefs d'API
@@ -45,14 +46,14 @@ info:
 
     # Aide
     Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.
-  version: '1.0'
+  version: '1.1'
   title: API de Development You2You
   x-logo:
     url: 'https://kangooz.github.io/apidoc/img/logo.png'
 x-servers:
-  - url: //api.sandbox.you2you.fr/api
+  - url: //api.sandbox.you2you.fr/api/1.1
     description: Serveur de test
-  - url: //api.you2you.fr/api
+  - url: //api.you2you.fr/api/1.1
     description: Serveur de production
 produces:
   - application/json
@@ -175,6 +176,16 @@ paths:
       summary: Création d'une nouvelle livraison
       description: |
         Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible sur notre application mobile "You2You" afin qu'un membre de la communauté Youzer-livreur You2You puisse la réserver et effectuer la livraison.
+
+        Les champs dimension et weight sont optionnels si le champs vehicules est renseigné. Et inversement, le champs véhicules est optionnel si les champs dimension et weight sont renseignés.
+
+        Règle de correspondance poids et dimension en fonction des moyens de transport.
+        | Véhicule  |  Valeur  |  Poids max.  |  Dimension max. (en cm) |
+        |:-:|:-:|---|---|
+        | Piéton  | walk  | 2 Kg  | 20x20x30  |
+        | Vélo  | bike  | 5 Kg  | 20x20x30  |
+        | Moto/Scooter  | moto  | 8 Kg  | 20x20x30  |
+        | Voiture  | car  |  20 Kg | 100x70x50  |
       operationId: createDelivery
       produces:
         - application/json
@@ -237,9 +248,9 @@ paths:
       summary: Récupérer une livraison.
       description: |
         Récupère toutes les informations d'une livraison.
-      
+
         Pour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:
-        
+
         | Statut  | Valeur  |
         |:-:|:-:|
         | En attente  | 0 |
@@ -287,9 +298,9 @@ paths:
       summary: Récupérer le statut d'une livraison.
       description: |
         Récupère le statut actuel d'une livraison.
-        
+
         Pour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:
-        
+
         | Statut  | Valeur  |
         |:-:|:-:|
         | En attente  | 0 |
@@ -340,9 +351,9 @@ paths:
         - si la livraison n'a pas été réservée par un Youzer (livreur) (status.value = 1)
         - 1H30 avant le début du créneau de livraison (shipstart - 1h30)
         - après le début du créneau de livraison si le Youzer (livreur) n'a pas retiré le colis. (Now() > shipstart)
-        
+
         Dans le cas où un Youzer (livreur) a réservé la livraison et que l'annulation intervient entre 1h30 avant le début du créneau de livraison et le début du créneau de livraison, 50% du prix de la livraison restera à votre charge. (status.value = 2 && shipstart - 1h30 < NOW() < shipstart)
-        
+
         Une livraison ne peut pas être annulée à partir du moment où un livreur à récupéré le colis.
         Dans ce cas, status.value >= 3.
 
@@ -416,8 +427,6 @@ definitions:
       - description
       - shipStart
       - shipEnd
-      - dimension
-      - weight
       - Contact
       - Customer
     properties:
@@ -453,6 +462,15 @@ definitions:
           ss = la seconde
         type: string
         example: '2016-05-30 20:28:00'
+      vehicules:
+        description: Le(s) véhicule(s) nécessaire(s) pour réaliser cette livraison
+        enum:
+          - walk
+          - bike
+          - moto
+          - car
+        type: string
+        example: 'bike,moto,car'
       dimension:
         description: Les dimensions du colis à livrer
         allOf:
