@@ -7,7 +7,7 @@
   "host": "api.you2you.fr",
   "basePath": "/api",
   "info": {
-    "description": "Bienvenue sur la documentation de l'API publique You2You. Nous sommes une plateforme de livraison dédiée aux startups et commerçants. Livrez vos clients moins cher et plus vite grâce à notre communauté collaborative.\n\n# Fonctionnement\nNotre API est organisée suivant le style REST et utilise des verbes et des codes de retour standards du protocole HTTP. Elle renvoie exclusivement des réponses au format JSON ou texte.\nÀ ce jour, il n’existe pas de bibliothèque officielle. Cette documentation est là pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents.\n\n# Accès à l’API\nL’API est disponible sur deux environnements:\n\nhttps://api.you2you.fr, l’environnement de production.\n\nhttps://api.sandbox.you2you.fr, l’environnement dédié aux tests.\n\n# Comment tester des requêtes vers l'API?\nNous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).\n\n# Versionning\nL'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieurs.\n\nVersions disponibles:\n- [1.0](https://kangooz.github.io/apidoc)\n\n# Récuparation des clefs d'API\nVos clefs d'API seront disponibles dès lors que vous possédez un compte You2You. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:\n1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.\n\n2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.\n\n3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/settings.\"\n\n# Aide\nNos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.\n",
+    "description": "Bienvenue sur la documentation de l'API publique You2You.\n\nYou2You est le leader de la livraison collaborative en France.\n- Nous livrons toutes vos commandes express en 1h30 ou sur RDV dans des créneaux d’une heure.\n- Un particulier se trouvant à proximité profite de votre demande de livraison pour rentabiliser son trajet en échange d’une compensation financière.\n- Une livraison économique, pratique, sociale et écologique.\n\n# Fonctionnement\nNotre API est organisée suivant le style REST et elle :\n- utilise des verbes et des codes de retour standards du protocole HTTP.\n- renvoie exclusivement des réponses au format JSON ou texte.\n\nCette documentation est là pour vous permettre d’implémenter les mécanismes nécessaires et des exemples concrets sont présents. À ce jour, il n’existe pas de bibliothèque officielle.\n\n# Accès à l’API\nL’API est disponible sur deux environnements:\n\n- L'environnement de PRODUCTION : https://api.you2you.fr\n- L'environnement dédié aux tests : https://api.sandbox.you2you.fr\n\n# Comment tester des requêtes vers l'API?\nNous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).\n\n# Versionning\nL'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieures.\n\nVersions disponibles:\n- [1.0](https://kangooz.github.io/apidoc/1.0)\n\n# Récupération des clefs d'API\nVos clés d'API sont générées à la création de votre compte sur https://livraison.you2you.fr. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:\n1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.\n\n2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.\n\n3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/settings.\"\n\n# Aide\nNos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.\n",
     "version": "1.0",
     "title": "API de Development You2You",
     "x-logo": {
@@ -16,7 +16,7 @@
   },
   "x-servers": [
     {
-      "url": "//api.sandbox.you2you.fr/api",
+      "url": "//api-sandbox.you2you.fr/api",
       "description": "Serveur de test"
     },
     {
@@ -37,7 +37,7 @@
     "/auth/test": {
       "get": {
         "tags": [
-          "Authorisation"
+          "Autorisation"
         ],
         "summary": "Tester les droits d'accès.",
         "description": "Envoi d'une requête afin de vérifier que les droits d'accès sont valides.",
@@ -49,7 +49,7 @@
           {
             "in": "body",
             "name": "body",
-            "description": "La pair de clés à tester",
+            "description": "La paire de clés à tester",
             "required": true,
             "schema": {
               "$ref": "#/definitions/Authorisation"
@@ -82,254 +82,13 @@
         }
       }
     },
-    "/deliveries/{id}": {
-      "get": {
-        "tags": [
-          "Livraison"
-        ],
-        "summary": "Récupérer une livraison.",
-        "description": "Récupère toutes les informations d'une livraison.",
-        "operationId": "getDelivery",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID de la livraison",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DeliveryDetails"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Invalid credentials.",
-              "text/plain": "\"Invalid credentials.\""
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerError"
-            }
-          }
-        }
-      }
-    },
-    "/deliveries": {
-      "get": {
-        "tags": [
-          "Livraison"
-        ],
-        "summary": "Récupérer toutes les livraisons.",
-        "description": "Récupère toutes les livraisons créées par votre profil.",
-        "operationId": "getAllDelivery",
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/DeliveryShortedDetails"
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Invalid credentials.",
-              "text/plain": "\"Invalid credentials.\""
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerError"
-            }
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Livraison"
-        ],
-        "summary": "Création d'une nouvelle livraison",
-        "description": "Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible à travers nos applications afin qu'un livreur You2You puisse la réserver et effectuer la livraison.\n",
-        "operationId": "createDelivery",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "description": "Les informations sur la livraison",
-            "schema": {
-              "$ref": "#/definitions/Delivery"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/DeliveryCreationSuccess"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Invalid credentials.",
-              "text/plain": "\"Invalid credentials.\""
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "schema": {
-              "$ref": "#/definitions/DeliveryCreationValidation"
-            }
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerError"
-            }
-          }
-        }
-      }
-    },
-    "/deliveries/{id}/status": {
-      "get": {
-        "tags": [
-          "Livraison"
-        ],
-        "summary": "Récupérer le statut d'une livraison.",
-        "description": "Récupère le statut actuel d'une livraison.\n",
-        "operationId": "getDeliveryStatus",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID de la livraison",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "schema": {
-              "$ref": "#/definitions/StatusSuccess"
-            }
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Invalid credentials.",
-              "text/plain": "\"Invalid credentials.\""
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerError"
-            }
-          }
-        }
-      }
-    },
-    "/deliveries/{id}/cancel": {
-      "patch": {
-        "tags": [
-          "Livraison"
-        ],
-        "summary": "Annuler une livraison.",
-        "description": "La possibilité d'annuler une livraison varie en fonction du status de la livraison. Voici les règles en vigueur:\n\n* Une livraison **peut être annulée** sans frais si la livraison a été créée mais n'est pas encore réservée par un livreur.\n\n  Dans ce cas, status.value < 2.\n\n* Une livraison réservée par un livreur **peut être annulée** si la livraison n'a pas encore été retirée **et** que la requête est effectuée 2 heures avant la fin du créneau maximum de livraison. Le coût de l'annulation s'élèvera au prix de la livraison / 2.\n\n  Dans ce cas, status.value == 2.\n\n* Une livraison **ne peut pas être annulée** à partir du moment où un livreur à récupéré le colis.\n\n  Dans ce cas, status.value > 2.\n\nPour toutes demandes ou incidents sur une livraison, nos équipes sont là pour vous aider et répondre à vos questions. Contactez nous [ICI](https://help.you2you.fr)\n",
-        "operationId": "cancelDelivery",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "ID de la livraison",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized",
-            "schema": {
-              "type": "string"
-            },
-            "examples": {
-              "application/json": "Invalid credentials.",
-              "text/plain": "\"Invalid credentials.\""
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "schema": {
-              "$ref": "#/definitions/DeliveryShipped"
-            }
-          },
-          "404": {
-            "description": "Not Found"
-          },
-          "500": {
-            "description": "Internal Server Error",
-            "schema": {
-              "$ref": "#/definitions/InternalServerError"
-            }
-          }
-        }
-      }
-    },
     "/deliveries/eligibility": {
       "post": {
         "tags": [
           "Livraison"
         ],
         "summary": "Tester l'éligibilité d'une nouvelle livraison",
-        "description": "Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. La résultat est basé sur les informations du colis, l'adresse de récupération et l'adresse de livraison.\n",
+        "description": "Test d'une livraison afin de savoir si elle peut être captée par le service de You2You. Le résultat est basé sur les informations du colis, l'adresse de retrait et l'adresse de livraison.\n",
         "operationId": "testDelivery",
         "produces": [
           "application/json"
@@ -383,7 +142,7 @@
           "Livraison"
         ],
         "summary": "Calculer le prix d'une nouvelle livraison",
-        "description": "Calcul le prix d''une livraison en fonction des informations du colis et du parcours à effectuer pour livrer le colis.\n",
+        "description": "Calcul le prix d'une livraison en fonction des informations du colis et du parcours à effectuer pour livrer le colis.\n",
         "operationId": "computeDeliveryPrice",
         "produces": [
           "application/json"
@@ -421,6 +180,247 @@
             "schema": {
               "$ref": "#/definitions/DeliveryPriceValidation"
             }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries": {
+      "post": {
+        "tags": [
+          "Livraison"
+        ],
+        "summary": "Création d'une nouvelle livraison",
+        "description": "Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible sur notre application mobile \"You2You\" afin qu'un membre de la communauté Youzer-livreur You2You puisse la réserver et effectuer la livraison.\n",
+        "operationId": "createDelivery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Les informations sur la livraison",
+            "schema": {
+              "$ref": "#/definitions/Delivery"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeliveryCreationSuccess"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/DeliveryCreationValidation"
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Livraison"
+        ],
+        "summary": "Récupérer toutes les livraisons.",
+        "description": "Récupère toutes les livraisons créées par votre profil.",
+        "operationId": "getAllDelivery",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/DeliveryShortedDetails"
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries/{id}": {
+      "get": {
+        "tags": [
+          "Livraison"
+        ],
+        "summary": "Récupérer une livraison.",
+        "description": "Récupère toutes les informations d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulé 0%  | 7  |\n| Annulé 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
+        "operationId": "getDelivery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la livraison",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/DeliveryDetails"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries/{id}/status": {
+      "get": {
+        "tags": [
+          "Livraison"
+        ],
+        "summary": "Récupérer le statut d'une livraison.",
+        "description": "Récupère le statut actuel d'une livraison.\n\nPour rappel, le tableau de correspondance valeurs <=> statut d'une livraison:\n\n| Statut  | Valeur  |\n|:-:|:-:|\n| En attente  | 0 |\n| En cours d'attribution  | 1 |\n| En route  | 2  |\n| Proche du point de retrait  | 3  |\n| Retrait effectué  | 4  |\n| Proche lieu de livraison  | 5  |\n| Livrée  | 6  |\n| Annulé 0%  | 7  |\n| Annulé 50%  | 10  |\n| Retour 200%  | 12  |\n| Livrée 200%  | 13  |\n",
+        "operationId": "getDeliveryStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la livraison",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/StatusSuccess"
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
+            }
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "schema": {
+              "$ref": "#/definitions/InternalServerError"
+            }
+          }
+        }
+      }
+    },
+    "/deliveries/{id}/cancel": {
+      "patch": {
+        "tags": [
+          "Livraison"
+        ],
+        "summary": "Annuler une livraison.",
+        "description": "Vous pouvez annuler gratuitement à tout moment une demande de livraison dans les cas suivants :\n- si la livraison n'a pas été réservée par un Youzer (livreur) (status.value = 1)\n- 1H30 avant le début du créneau de livraison (shipstart - 1h30)\n- après le début du créneau de livraison si le Youzer (livreur) n'a pas retiré le colis. (Now() > shipstart)\n\nDans le cas où un Youzer (livreur) a réservé la livraison et que l'annulation intervient entre 1h30 avant le début du créneau de livraison et le début du créneau de livraison, 50% du prix de la livraison restera à votre charge. (status.value = 2 && shipstart - 1h30 < NOW() < shipstart)\n\nUne livraison ne peut pas être annulée à partir du moment où un livreur à récupéré le colis.\nDans ce cas, status.value >= 3.\n\n![](https://kangooz.github.io/apidoc/img/cancel_scheme.png)\n\nPour toutes demandes ou incidents sur une livraison, nos équipes sont là pour vous aider et répondre à vos questions. Contactez nous [ICI](https://github.com/kangooz/apidoc/issues)\n",
+        "operationId": "cancelDelivery",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID de la livraison",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized",
+            "schema": {
+              "type": "string"
+            },
+            "examples": {
+              "application/json": "Invalid credentials.",
+              "text/plain": "\"Invalid credentials.\""
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "schema": {
+              "$ref": "#/definitions/DeliveryShipped"
+            }
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error",
@@ -499,7 +499,7 @@
           "example": "2016-05-30 18:28:00"
         },
         "shipEnd": {
-          "description": "Une date et heure qui corresponds à la fin du créneau de livraison souhaité. Généralement 2 heures après le début du créneau de livraison.\n\nFormatage attendu: yyyy/mm/dd hh:mm[:ss]\n\nyyyy = l'année,\nmm = le mois,\ndd = le jour du mois,\nhh = l'heure,\nmm = la minute,\nss = la seconde\n",
+          "description": "Une date et heure qui corresponds à la fin du créneau de livraison souhaité. Généralement 1 heure après le début du créneau de livraison.\n\nFormatage attendu: yyyy/mm/dd hh:mm[:ss]\n\nyyyy = l'année,\nmm = le mois,\ndd = le jour du mois,\nhh = l'heure,\nmm = la minute,\nss = la seconde\n",
           "type": "string",
           "example": "2016-05-30 20:28:00"
         },
@@ -512,12 +512,12 @@
           ]
         },
         "weight": {
-          "description": "Le poids du colis à livrer en kilos",
+          "description": "Le poids (kilos) du colis à livrer",
           "type": "number",
           "example": 0.42
         },
         "Contact": {
-          "description": "Les informations du contact pour le retrait du colis",
+          "description": "Les informations de la personne joignable sur le point de retrait",
           "allOf": [
             {
               "$ref": "#/definitions/Contact"
@@ -525,7 +525,7 @@
           ]
         },
         "Customer": {
-          "description": "Les informations du contact pour le dépôt du colis",
+          "description": "Les informations du client à livrer / point de livraison",
           "allOf": [
             {
               "$ref": "#/definitions/Customer"
@@ -1025,7 +1025,7 @@
             }
           }
         },
-        "email": {
+        "dimension": {
           "description": "Les dimensions du colis",
           "type": "string",
           "example": "L30 x l15 x H10 cm"
@@ -1417,7 +1417,7 @@
           ]
         },
         "Destination": {
-          "description": "L'adresse de dépôt du colis",
+          "description": "L'adresse de livraison du colis",
           "allOf": [
             {
               "$ref": "#/definitions/Destination"
@@ -1433,7 +1433,7 @@
           ]
         },
         "weight": {
-          "description": "Le poids du colis à livrer en kilos",
+          "description": "Le poids (kilos) du colis à livrer",
           "type": "number",
           "example": 0.42
         }
