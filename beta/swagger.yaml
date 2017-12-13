@@ -27,7 +27,7 @@ info:
     - L'environnement dédié aux tests : https://api-sandbox.you2you.fr
 
     # Comment tester des requêtes vers l'API?
-    Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, Node.js, PHP, etc...).
+    Nous recommandons l'utilisation de [POSTMAN](https://www.getpostman.com/). C'est une application pour faciliter les tests d'intégration et récupérer le code dans d'autres langages non-fournis dans notre documentation actuelle (ex: JAVA, C#, etc...).
 
     # Versionning
     L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieures.
