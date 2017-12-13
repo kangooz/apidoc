@@ -85,7 +85,7 @@ info:
     | updatedAt  |  string |  La date et l'heure de la modification |
     | message  |  string |  Le message détaillant le callback |
     | text  |  string |  La valeur textuelle du statut de la livraison |
-    | value  |  string |  La valeur du statut de la livraison |
+    | value  |  integer |  La valeur du statut de la livraison |
     | description  |  string |  La description associée à la livraison |
 
     # Aide
