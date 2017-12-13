@@ -41,7 +41,52 @@ info:
 
     2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.
 
-    3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/settings."
+    3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/api.
+
+    # Webhook
+    Un webhook est un moyen d’appeler une application tierce lorsqu’une action définie a été effectuée. Par exemple, vous pouvez déclencher l’activation d’un webhook lorsque le statut d'une livraison change ou lorsque le créneau de livraison est modifié.
+
+    Configuration de vos webhooks sur notre interface de livraison:
+
+    1. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.
+
+    2. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/api.
+
+    3. Saisissez les urls de callback. Exemple: https://mondomain.fr/livraison/endpoint.
+
+    Détails sur les réquêtes envoyées à vos applications:
+
+    1. Modification du créneau de livraison
+
+        - Méthode: POST
+        - Content-Type: application/json
+
+    | Paramètre  |  Type |  Description |
+    |:-:|:-:|---|
+    | id  | integer  |  L'ID de la livraison |
+    | updatedAt  |  string |  La date et l'heure de la modification |
+    | message  |  string |  Le message détaillant le callback |
+    | shipStart  |  object |  La date et l'heure de début du créneau de livraison |
+    | shipStart.old  |  string |  La date et l'heure avant modification |
+    | shipStart.new  |  string |  La date et l'heure après modification |
+    | shipEnd  |  object |  La date et l'heure de fin du créneau de livraison souhaité |
+    | shipEnd.old  |  string |  La date et l'heure avant modification |
+    | shipEnd.new  |  string |  La date et l'heure après modification |
+
+
+    2. Modification du statut d'une livraison
+
+        - Méthode: POST
+        - Content-Type: application/json
+
+    | Paramètre  |  Type |  Description |
+    |:-:|:-:|---|
+    | id  | integer  |  L'ID de la livraison |
+    | updatedAt  |  string |  La date et l'heure de la modification |
+    | message  |  string |  Le message détaillant le callback |
+    | text  |  string |  La valeur textuelle du statut de la livraison |
+    | value  |  string |  La valeur du statut de la livraison |
+    | description  |  string |  La description associée à la livraison |
 
     # Aide
     Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.
