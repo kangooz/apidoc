@@ -33,6 +33,7 @@ info:
     L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieures.
 
     Versions disponibles:
+    - [1.1](https://kangooz.github.io/apidoc/1.1)
     - [1.0](https://kangooz.github.io/apidoc/1.0)
 
     # Récupération des clefs d'API
@@ -45,14 +46,14 @@ info:
 
     # Aide
     Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.
-  version: '1.0'
+  version: '1.1'
   title: API de Development You2You
   x-logo:
     url: 'https://kangooz.github.io/apidoc/img/logo.png'
 x-servers:
-  - url: //api-sandbox.you2you.fr/api
+  - url: //api-sandbox.you2you.fr/api/1.1
     description: Serveur de test
-  - url: //api.you2you.fr/api
+  - url: //api.you2you.fr/api/1.1
     description: Serveur de production
 produces:
   - application/json
@@ -175,6 +176,18 @@ paths:
       summary: Création d'une nouvelle livraison
       description: |
         Création d'une nouvelle livraison disponible sur le service You2You. Elle sera instantanément disponible sur notre application mobile "You2You" afin qu'un membre de la communauté Youzer-livreur You2You puisse la réserver et effectuer la livraison.
+
+        Le client final reçevra automatiquement un SMS de suivi lorsqu'un Youzer se sera attribué la livraison.
+
+        Les champs "dimension" et "weight" sont optionnels si le champs "vehicules" est renseigné. Et inversement, le champs "vehicules" est optionnel si les champs "dimension" et "weight" sont renseignés.
+
+        Règle de correspondance poids et dimension en fonction des moyens de transport.
+        | Véhicule  |  Valeur  |  Poids max.  |  Dimension max. (en cm) |
+        |:-:|:-:|---|---|
+        | Piéton  | walk  | 2 Kg  | 20x20x30  |
+        | Vélo  | bike  | 5 Kg  | 20x20x30  |
+        | Moto/Scooter  | moto  | 8 Kg  | 20x20x30  |
+        | Voiture  | car  |  20 Kg | 100x70x50  |
       operationId: createDelivery
       produces:
         - application/json
@@ -416,8 +429,6 @@ definitions:
       - description
       - shipStart
       - shipEnd
-      - dimension
-      - weight
       - Contact
       - Customer
     properties:
@@ -453,6 +464,15 @@ definitions:
           ss = la seconde
         type: string
         example: '2016-05-30 20:28:00'
+      vehicules:
+        description: Le(s) véhicule(s) nécessaire(s) pour réaliser cette livraison
+        enum:
+          - walk
+          - bike
+          - moto
+          - car
+        type: string
+        example: 'bike,moto,car'
       dimension:
         description: Les dimensions du colis à livrer
         allOf:
@@ -1146,6 +1166,14 @@ definitions:
         description: L'ID de la livraison créée
         type: integer
         example: 42
+      ref:
+        description: La référence du colis
+        type: string
+        example: '2017120831'
+      followUrl:
+        description: Lien de suivi
+        type: string
+        example: 'https://livraison.you2you.fr/f/22071/GRAtMwEV'
   DeliveryTest:
     type: object
     required:
