@@ -91,7 +91,7 @@ info:
     # Aide
     Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.
   version: '1.0'
-  title: API de Development You2You
+  title: API de développement You2You
   x-logo:
     url: 'https://kangooz.github.io/apidoc/img/logo.png'
 x-servers:
