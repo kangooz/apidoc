@@ -33,25 +33,25 @@ info:
     L'API sera amenée à évoluer durant les prochains mois. Afin de ne pas perturber votre implémentation, nous veillerons impérativement à garder les points d'accès, la structure des requêtes et le format des réponses pour les versions antérieures.
 
     Versions disponibles:
-    - [1.1](https://kangooz.github.io/apidoc/1.1)
-    - [1.0](https://kangooz.github.io/apidoc/1.0)
+    - <a href="https://kangooz.github.io/apidoc/1.1" target="_blank">1.1</a>
+    - <a href="https://kangooz.github.io/apidoc/1.0" target="_blank">1.0</a>
 
     # Récupération des clefs d'API
     Vos clés d'API sont générées à la création de votre compte sur https://livraison.you2you.fr. Si vous êtes déjà en possession d'un compte, commencez à l'étape 2. Voici le parcours complet:
-    1. Créez votre compte You2You sur https://livraison.you2you.fr/signup.
+    1. Créez votre compte You2You sur <a href="https://livraison.you2you.fr/signup" target="_blank">https://livraison.you2you.fr/signup</a>.
 
-    2. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.
+    2. Connectez-vous avec vos identifiants sur <a href="https://livraison.you2you.fr" target="_blank">https://livraison.you2you.fr</a>.
 
-    3. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/api.
+    3. Naviguez sur votre dashboard jusqu'à la section API <a href="https://livraison.you2you.fr/api" target="_blank">https://livraison.you2you.fr/api</a>.
 
     # Webhook
     Un webhook est un moyen d’appeler une application tierce lorsqu’une action définie a été effectuée. Par exemple, vous pouvez déclencher l’activation d’un webhook lorsque le statut d'une livraison change ou lorsque le créneau de livraison est modifié.
 
     Configuration de vos webhooks sur notre interface de livraison:
 
-    1. Connectez-vous avec vos identifiants sur https://livraison.you2you.fr.
+    1. Connectez-vous avec vos identifiants sur <a href="https://livraison.you2you.fr" target="_blank">https://livraison.you2you.fr</a>.
 
-    2. Naviguez sur votre dashboard jusqu'à la section API https://livraison.you2you.fr/api.
+    2. Naviguez sur votre dashboard jusqu'à la section API <a href="https://livraison.you2you.fr/api" target="_blank">https://livraison.you2you.fr/api</a>.
 
     3. Saisissez les urls de callback. Exemple: https://mondomain.fr/livraison/endpoint.
 
@@ -90,9 +90,9 @@ info:
     | description  |  string |  La description associée à la livraison |
 
     # Aide
-    Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : https://github.com/kangooz/apidoc/issues.
+    Nos équipes sont à votre disposition pour vous répondre en cas de problèmes. Reportez vos anomalies sur l'espace github prévu à cet effet : <a href="https://github.com/kangooz/apidoc/issues" target="_blank">https://github.com/kangooz/apidoc/issues</a>.
   version: '1.1'
-  title: API de Development You2You
+  title: API de développement You2You
   x-logo:
     url: 'https://kangooz.github.io/apidoc/img/logo.png'
 x-servers:
